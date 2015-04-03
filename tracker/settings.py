@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'forms',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -75,12 +76,12 @@ WSGI_APPLICATION = 'tracker.wsgi.application'
 #
 # In your local test and development virtual environment you can use the following
 # PowerShell statement:
-#  $Env:DATABASE_URL="postgres://USER:PASSWORD@usmasvddsol.eecs.usma.edu:5432/DATABASE"
+#  $Env:DATABASE_URL="postgres://pizza:hours@usmasvddsol.eecs.usma.edu:5432/watcher"
 # replace USER, PASSWORD, and DATABASE with the values mentioned in class.
 #
 import dj_database_url
 DATABASES = {
-    "default": dj_database_url.config(default="sqlite:///"+os.path.join(BASE_DIR, 'tracker_db.sqlite3')),
+"default": dj_database_url.config(default="sqlite:///"+os.path.join(BASE_DIR, 'db.sqlite3')),
 }
 
 # Internationalization
