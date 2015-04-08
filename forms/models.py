@@ -42,7 +42,7 @@ class Cadet(models.Model):
 	company = models.CharField(max_length=1, choices=CO_CHOICES, default= ALPHA)
 	year = models.IntegerField(max_length=4)
 	phone = models.IntegerField(max_length=10)
-	email = models.EmailField(max_length=254, unique=True, default='ash.ketchum@pokemon.com')
+	email = models.EmailField(max_length=254, unique=True, default='ash.ketchum@usma.com')
 	
 	def __str__(self):              # __unicode__ on Python 2
 		return self.firstName+" "+self.lastName
@@ -64,7 +64,7 @@ class Users(models.Model):
 	case = models.CharField(max_length= 10, choices=CASE_CHOICES, null=True)
 	
 	def __str__(self):
-		return self.userID
+		return str(self.userID)
 		
 class ZIP(models.Model):
 	zip = models.IntegerField(max_length=9, unique=True)
@@ -72,15 +72,41 @@ class ZIP(models.Model):
 	state = models.CharField(max_length=2)
 	
 	def __str__(self):              # __unicode__ on Python 2
-		return self.zip
+		return str(self.zip)
 
 class Transportation(models.Model):
+	PLANE= 'A'
+	TRAIN= 'B'
+	POV= 'C'
+	NONPOV= 'D'
+	CASE_CHOICES = (
+		(PLANE, 'Plane'),
+		(TRAIN, 'Train'),
+		(POV, 'POV'),
+		(NONPOV, 'Non-POV'),
+	)
 	transpoID = models.AutoField(primary_key=True)
 	departTime = models.DateTimeField()
-	transpoType = models.CharField(max_length=10)
+	transpoType = models.CharField(max_length=10, choices=CASE_CHOICES)
 	
 	def __str__(self):              # __unicode__ on Python 2
-		return self.transpoID
+		return str(self.transpoID)
+
+class Plane(Transportation):
+	flightID = models.CharField(max_length=10)
+	flightDate = models.DateTimeField()
+	airportCode = models.CharField(max_length=2)
+	
+class Train(Transportation):
+	station = models.CharField(max_length=25)
+
+class POV(Transportation):
+	licenseNum = models.CharField(max_length=10)
+	make = models.CharField(max_length=25)
+	model = models.CharField(max_length=25)
+
+class NonPOV(Transportation):
+	type = models.CharField(max_length=25)
 
 class TravelPlan(models.Model):
 	travelID = models.AutoField(primary_key=True)
@@ -91,6 +117,6 @@ class TravelPlan(models.Model):
 	editDate = models.DateTimeField(null=True)
 	
 	def __str__(self):              # __unicode__ on Python 2
-		return self.travelID
+		return str(self.travelID)
 	def edited_recently(self):
 		return self.editDate >= timezone.now() - datetime.timedelta(days=1)
