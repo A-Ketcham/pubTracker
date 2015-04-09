@@ -46,25 +46,6 @@ class Cadet(models.Model):
 	
 	def __str__(self):              # __unicode__ on Python 2
 		return self.firstName+" "+self.lastName
-
-class Users(models.Model):
-	ADMIN= 'A'
-	TAC= 'T'
-	S1= 'S'
-	CASE_CHOICES = (
-		(ADMIN, 'Admin'),
-		(TAC, 'TAC'),
-		(S1, 'Cadet S1'),
-	)
-
-	userID = models.AutoField(primary_key=True, editable=False)
-	email = models.ForeignKey(Cadet)
-	password = models.SlugField() 
-	#A SlugField is a short label for something, containing only letters, numbers, underscores or hyphens.
-	case = models.CharField(max_length= 10, choices=CASE_CHOICES, null=True)
-	
-	def __str__(self):
-		return str(self.userID)
 		
 class ZIP(models.Model):
 	zip = models.IntegerField(max_length=9, unique=True)
