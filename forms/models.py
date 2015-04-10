@@ -1,6 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
+
+class UserProfile(models.Model):
+	user = models.OneToOneField(User)
+	
+	def __str__(self):
+		return self.user.username
 
 class Cadet(models.Model):
 	FIRST = '1'
@@ -42,7 +49,7 @@ class Cadet(models.Model):
 	company = models.CharField(max_length=1, choices=CO_CHOICES, default= ALPHA)
 	year = models.IntegerField(max_length=4)
 	phone = models.IntegerField(max_length=10)
-	email = models.EmailField(max_length=254, unique=True, default='ash.ketchum@usma.com')
+	email = models.ForeignKey(UserProfile)
 	
 	def __str__(self):              # __unicode__ on Python 2
 		return self.firstName+" "+self.lastName
@@ -76,7 +83,7 @@ class Transportation(models.Model):
 class Plane(Transportation):
 	flightID = models.CharField(max_length=10)
 	flightDate = models.DateTimeField()
-	airportCode = models.CharField(max_length=2)
+	airportCode = models.CharField(max_length=3)
 	
 class Train(Transportation):
 	station = models.CharField(max_length=25)

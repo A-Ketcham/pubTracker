@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Cadet, Transportation, ZIP, TravelPlan, Train, Plane, POV, NonPOV
+from .models import UserProfile, Cadet, Transportation, ZIP, TravelPlan, Train, Plane, POV, NonPOV
 
 class TrainInLine(admin.StackedInline):
 	model = Train
@@ -50,7 +50,8 @@ class CadetAdmin(admin.ModelAdmin):
 
 class TravelPlanAdmin(admin.ModelAdmin):
 	list_display = ('xNumber', 'transpoID', 'editDate')
-	
+
+admin.site.register(UserProfile)	
 admin.site.register(Cadet, CadetAdmin)
 admin.site.register(Transportation, TranspoAdmin)
 admin.site.register(ZIP)
