@@ -4,12 +4,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class UserProfile(models.Model):
-	user = models.OneToOneField(User)
-	
-	def __str__(self):
-		return self.user.username
-
-class Cadet(models.Model):
 	FIRST = '1'
 	SECOND = '2'
 	THIRD = '3'
@@ -42,21 +36,29 @@ class Cadet(models.Model):
 		(INDIA, 'I'),
 	)
 	
-	xNumber = models.IntegerField(max_length=5, unique=True, primary_key=True)
-	lastName = models.CharField(max_length=50)
-	firstName = models.CharField(max_length=25)
+	user = models.OneToOneField(User)
 	regiment = models.CharField(max_length=1, choices=REG_CHOICES, default= FIRST)
 	company = models.CharField(max_length=1, choices=CO_CHOICES, default= ALPHA)
+	
+	def __str__(self):
+		return self.user.username
+
+class Cadet(models.Model):
+	
+	xNumber = models.IntegerField(max_length=5, unique=True, primary_key=True)
 	year = models.IntegerField(max_length=4)
 	phone = models.IntegerField(max_length=10)
 	email = models.ForeignKey(UserProfile)
 	
 	def __str__(self):              # __unicode__ on Python 2
-		return self.firstName+" "+self.lastName
-		
+		return str(self.xNumber)
+	def name(self):
+		concat= UserProfile.firstName+" "+UserProfile.lastName
+		return concat
+	
 class ZIP(models.Model):
-	zip = models.IntegerField(max_length=9, unique=True)
-	city = models.CharField(max_length=22) #Longest US city name is Rancho Santa Margarita, California
+	zip = models.IntegerField(max_length=9)
+	city = models.CharField(max_length=22)
 	state = models.CharField(max_length=2)
 	
 	def __str__(self):              # __unicode__ on Python 2
@@ -97,12 +99,16 @@ class NonPOV(Transportation):
 	type = models.CharField(max_length=25)
 
 class TravelPlan(models.Model):
+	LOCATOR_YES_NO_CHOICES = ( (True,'Yes'), (False, 'No'))
 	travelID = models.AutoField(primary_key=True)
 	xNumber = models.ForeignKey(Cadet)
 	transpoID = models.ForeignKey(Transportation)
 	destinationAdd = models.CharField(max_length=55)
 	zip= models.ForeignKey(ZIP)
 	editDate = models.DateTimeField(null=True)
+	approved = models.NullBooleanField(choices=LOCATOR_YES_NO_CHOICES,
+                                max_length=3,
+                                blank=True, default=False,)
 	
 	def __str__(self):              # __unicode__ on Python 2
 		return str(self.travelID)

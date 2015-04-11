@@ -1,8 +1,6 @@
 from django.contrib import admin
-
-# Register your models here.
-
 from .models import UserProfile, Cadet, Transportation, ZIP, TravelPlan, Train, Plane, POV, NonPOV
+
 
 class TrainInLine(admin.StackedInline):
 	model = Train
@@ -44,15 +42,24 @@ class TranspoAdmin(admin.ModelAdmin):
 	list_display = ('transpoID', 'departTime', 'transpoType')
 
 class CadetAdmin(admin.ModelAdmin):
-	fields = ('xNumber', ('firstName', 'lastName'), ('company', 'regiment'), 'year', 'phone', 'email')
-	list_display = ('xNumber', 'lastName', 'company', 'regiment')
+	fields = ('xNumber', 'year', 'phone', 'email')
 	#readonly_fields = ('xNumber', 'email')
 
 class TravelPlanAdmin(admin.ModelAdmin):
-	list_display = ('xNumber', 'transpoID', 'editDate')
+	fields = ('xNumber', 'transpoID', 'editDate', 'destinationAdd', 'zip', 'approved')
+	raw_id_fields = ('zip',)
+	list_display = ('xNumber', 'transpoID', 'editDate', 'approved')
 
-admin.site.register(UserProfile)	
+class UserProfileAdmin(admin.ModelAdmin):
+	fields = ('user', ('regiment', 'company'))
+
+class ZIPAdmin(admin.ModelAdmin):
+	list_display = ('zip', 'city', 'state')
+	readonly_fields = ('zip', 'city', 'state')	
+		
+		
+admin.site.register(UserProfile, UserProfileAdmin)	
 admin.site.register(Cadet, CadetAdmin)
 admin.site.register(Transportation, TranspoAdmin)
-admin.site.register(ZIP)
+admin.site.register(ZIP, ZIPAdmin)
 admin.site.register(TravelPlan, TravelPlanAdmin)
