@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'forms',
+	'csvimport.app.CSVImportConf',  # use AppConfig for django >=1.7 csvimport >=2.2
 )
 
 MIDDLEWARE_CLASSES = (

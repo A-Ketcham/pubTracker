@@ -1,8 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Cadet(models.Model):
+class UserProfile(models.Model):
 	FIRST = '1'
 	SECOND = '2'
 	THIRD = '3'
@@ -35,40 +36,29 @@ class Cadet(models.Model):
 		(INDIA, 'I'),
 	)
 	
-	xNumber = models.IntegerField(max_length=5, unique=True, primary_key=True)
-	lastName = models.CharField(max_length=50)
-	firstName = models.CharField(max_length=25)
+	user = models.OneToOneField(User)
 	regiment = models.CharField(max_length=1, choices=REG_CHOICES, default= FIRST)
 	company = models.CharField(max_length=1, choices=CO_CHOICES, default= ALPHA)
-	year = models.IntegerField(max_length=4)
-	phone = models.IntegerField(max_length=10)
-	email = models.EmailField(max_length=254, unique=True, default='ash.ketchum@usma.com')
-	
-	def __str__(self):              # __unicode__ on Python 2
-		return self.firstName+" "+self.lastName
-
-class Users(models.Model):
-	ADMIN= 'A'
-	TAC= 'T'
-	S1= 'S'
-	CASE_CHOICES = (
-		(ADMIN, 'Admin'),
-		(TAC, 'TAC'),
-		(S1, 'Cadet S1'),
-	)
-
-	userID = models.AutoField(primary_key=True, editable=False)
-	email = models.ForeignKey(Cadet)
-	password = models.SlugField() 
-	#A SlugField is a short label for something, containing only letters, numbers, underscores or hyphens.
-	case = models.CharField(max_length= 10, choices=CASE_CHOICES, null=True)
 	
 	def __str__(self):
-		return str(self.userID)
-		
+		return self.user.username
+
+class Cadet(models.Model):
+	
+	xNumber = models.IntegerField(max_length=5, unique=True, primary_key=True)
+	year = models.IntegerField(max_length=4)
+	phone = models.IntegerField(max_length=10)
+	email = models.ForeignKey(UserProfile)
+	
+	def __str__(self):              # __unicode__ on Python 2
+		return str(self.xNumber)
+	def name(self):
+		concat= UserProfile.firstName+" "+UserProfile.lastName
+		return concat
+	
 class ZIP(models.Model):
-	zip = models.IntegerField(max_length=9, unique=True)
-	city = models.CharField(max_length=22) #Longest US city name is Rancho Santa Margarita, California
+	zip = models.IntegerField(max_length=9)
+	city = models.CharField(max_length=22)
 	state = models.CharField(max_length=2)
 	
 	def __str__(self):              # __unicode__ on Python 2
@@ -95,7 +85,7 @@ class Transportation(models.Model):
 class Plane(Transportation):
 	flightID = models.CharField(max_length=10)
 	flightDate = models.DateTimeField()
-	airportCode = models.CharField(max_length=2)
+	airportCode = models.CharField(max_length=3)
 	
 class Train(Transportation):
 	station = models.CharField(max_length=25)
@@ -109,12 +99,16 @@ class NonPOV(Transportation):
 	type = models.CharField(max_length=25)
 
 class TravelPlan(models.Model):
+	LOCATOR_YES_NO_CHOICES = ( (True,'Yes'), (False, 'No'))
 	travelID = models.AutoField(primary_key=True)
 	xNumber = models.ForeignKey(Cadet)
 	transpoID = models.ForeignKey(Transportation)
 	destinationAdd = models.CharField(max_length=55)
 	zip= models.ForeignKey(ZIP)
 	editDate = models.DateTimeField(null=True)
+	approved = models.NullBooleanField(choices=LOCATOR_YES_NO_CHOICES,
+                                max_length=3,
+                                blank=True, default=False,)
 	
 	def __str__(self):              # __unicode__ on Python 2
 		return str(self.travelID)
