@@ -37,24 +37,14 @@ class UserProfile(models.Model):
 	)
 	
 	user = models.OneToOneField(User)
-	regiment = models.CharField(max_length=1, choices=REG_CHOICES, default= FIRST)
-	company = models.CharField(max_length=1, choices=CO_CHOICES, default= ALPHA)
+	xNumber = models.CharField(max_length=6, unique=True, blank=True, default='x00000')
+	regiment = models.CharField(max_length=1, choices=REG_CHOICES, blank=True, default= FIRST)
+	company = models.CharField(max_length=1, choices=CO_CHOICES, blank=True, default= ALPHA)
+	year = models.IntegerField(max_length=4, blank=True, default='0000')
+	phone = models.IntegerField(max_length=10, blank=True, default='1112223334')
 	
 	def __str__(self):
 		return self.user.username
-
-class Cadet(models.Model):
-	
-	xNumber = models.IntegerField(max_length=5, unique=True, primary_key=True)
-	year = models.IntegerField(max_length=4)
-	phone = models.IntegerField(max_length=10)
-	email = models.ForeignKey(UserProfile)
-	
-	def __str__(self):              # __unicode__ on Python 2
-		return str(self.xNumber)
-	def name(self):
-		concat= UserProfile.firstName+" "+UserProfile.lastName
-		return concat
 	
 class ZIP(models.Model):
 	zip = models.IntegerField(max_length=9)
@@ -101,10 +91,10 @@ class NonPOV(Transportation):
 class TravelPlan(models.Model):
 	LOCATOR_YES_NO_CHOICES = ( (True,'Yes'), (False, 'No'))
 	travelID = models.AutoField(primary_key=True)
-	xNumber = models.ForeignKey(Cadet)
+	xNumber = models.ForeignKey(UserProfile)
 	transpoID = models.ForeignKey(Transportation)
 	destinationAdd = models.CharField(max_length=55)
-	zip= models.ForeignKey(ZIP)
+	zip= models.ForeignKey(ZIP, blank=True, default='000010000')
 	editDate = models.DateTimeField(null=True)
 	approved = models.NullBooleanField(choices=LOCATOR_YES_NO_CHOICES,
                                 max_length=3,

@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8">
+		<meta content="en-us" http-equiv="Content-Language" />
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<link href="../forms/static/polls/test.css" rel="stylesheet" type="text/css" />
+		
+		<title>{% block title %}USMA Leave Tracker{% endblock %}</title>
+		
+		<style type="text/css">
+		.auto-style1 {
+			text-align: right;
+		}
+		</style>
+		
+		</head>
+<body>
+	<header>
+		<img alt="" height="100" src="../forms/static/polls/images/logo.png" style="float: left" width="400" /><br />
+		<br />
+		&nbsp;
+		<style>
+			ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+			}
+			li {
+				float: right;
+			}
+			a:link, a:visited {
+				display: block;
+				width: 120px;
+				font-weight: bold;
+				color: #00000;
+				background-color: #00000;
+				text-align: right;
+				padding: 4px;
+				text-decoration: none;
+				text-transform: uppercase;
+			}
+			a:hover, a:active {
+				color: #FFFFF;
+				background-color: #00000;
+				border-color: #c9ae81;
+			}
+		</style>
+		<ul class="auto-style1">
+			<li><a href="registration/login.html">Test</a></li>
+			<li><a href="registration/logged_out.html">Log Out</a></li>
+			<li><a href="help.html">Help</a></li>
+			<li><a href="plan.html">Plans</a> </li>
+			<li><a href="base.html">Profile</a> </li>
+		</ul>
+
+	</header>
+<hr />
+
+	<h1>Test</h1>
+	{% block content %}{% endblock %}
+</body>
+
+</html>

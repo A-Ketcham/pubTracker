@@ -1,0 +1,23 @@
+﻿#wrapper {
+	font-size: large;
+	
+		
+}
+a:hover{
+	color:yellow;
+}
+a{
+	color:white;
+}
+body{
+	background:black;
+	color: #FFFF00;
+	text-align: center;
+}
+header{
+	display: block
+}
+}
+#header {
+	font-size: xx-large;
+}
