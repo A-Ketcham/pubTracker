@@ -3,9 +3,13 @@
 {% block title %}{{ block.super }} Travel Plans{% endblock %}
 
 {% block content %}
-   
+
+<br />  
+<h2>Cadet Travel Plans</h2>
+<br />
+  
 {% if Plans %}
-<table>
+<table style="width: 75%">
 	<thead>
 		<tr>
 			<th>Cadet</th>
@@ -22,16 +26,16 @@
 			<td>{{ plan.xNumber }}</td>
 			<td>{{ plan.transpoID }}</td>
 			<td>{{ plan.destinationAdd }}</td>
-			<td>{{ plan.zip }}</td>
-			<td>{{ plan.editDate }}</td>
-			<td>{{ plan.approved }}</td>
+			<td><right>{{ plan.zip }}</right></td>
+			<td><right>{{ plan.editDate }}</right></td>
+			<td><center>{{ plan.approved }}</center></td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
 
 {% else %}
-	<p> Where's the Data?</p>
+	<p>No plans to display.</p>
 {% endif %}
    
 {% endblock %}

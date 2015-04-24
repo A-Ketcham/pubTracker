@@ -1,7 +1,5 @@
 ﻿#wrapper {
-	font-size: large;
-	
-		
+	font-size: large;		
 }
 a:hover{
 	color:yellow;
@@ -17,7 +15,28 @@ body{
 header{
 	display: block
 }
-}
 #header {
 	font-size: xx-large;
+}
+table{
+	width : 75%;
+    display: table;
+	border: 1px solid black;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    border-color: gray;
+}
+th {
+    padding: 5px;
+	border: 1px solid black;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    border-color: gray;
+}
+td {
+    padding: 15px;
+	border: 1px solid black;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    border-color: gray;
 }

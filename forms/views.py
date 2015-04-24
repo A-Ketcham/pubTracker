@@ -5,7 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from django.template import Context, RequestContext, loader
 
-from .models import TravelPlan, UserProfile, ZIP
+from .models import TravelPlan, UserProfile, ZIP, Transportation, Plane, Train, POV, NonPOV
 from django.contrib.auth.models import User
 
 from django.forms import ModelForm
