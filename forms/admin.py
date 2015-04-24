@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import UserProfile, Cadet, Transportation, ZIP, TravelPlan, Train, Plane, POV, NonPOV
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin as OriginalUserAdmin
+from .models import UserProfile, Transportation, ZIP, TravelPlan, Train, Plane, POV, NonPOV
 
 
 class TrainInLine(admin.StackedInline):
@@ -41,25 +43,25 @@ class TranspoAdmin(admin.ModelAdmin):
 	inlines = [TrainInLine, PlaneInLine, POVInLine, NonPOVInLine]
 	list_display = ('transpoID', 'departTime', 'transpoType')
 
-class CadetAdmin(admin.ModelAdmin):
-	fields = ('xNumber', 'year', 'phone', 'email')
-	#readonly_fields = ('xNumber', 'email')
-
 class TravelPlanAdmin(admin.ModelAdmin):
 	fields = ('xNumber', 'transpoID', 'editDate', 'destinationAdd', 'zip', 'approved')
 	raw_id_fields = ('zip',)
 	list_display = ('xNumber', 'transpoID', 'editDate', 'approved')
-
-class UserProfileAdmin(admin.ModelAdmin):
-	fields = ('user', ('regiment', 'company'))
-
+	
 class ZIPAdmin(admin.ModelAdmin):
 	list_display = ('zip', 'city', 'state')
-	readonly_fields = ('zip', 'city', 'state')	
-		
-		
-admin.site.register(UserProfile, UserProfileAdmin)	
-admin.site.register(Cadet, CadetAdmin)
+	readonly_fields = ('zip', 'city', 'state')
+	list_per_page = 500
+
+class UserProfileInline(admin.StackedInline):
+	model = UserProfile
+	can_delete = False
+	
+class UserAdmin(OriginalUserAdmin):
+		inlines = [UserProfileInline, ]
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)	
 admin.site.register(Transportation, TranspoAdmin)
 admin.site.register(ZIP, ZIPAdmin)
 admin.site.register(TravelPlan, TravelPlanAdmin)

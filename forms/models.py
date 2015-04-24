@@ -66,7 +66,7 @@ class Transportation(models.Model):
 		(NONPOV, 'Non-POV'),
 	)
 	transpoID = models.AutoField(primary_key=True)
-	departTime = models.DateTimeField()
+	departTime = models.DateTimeField(null=True)
 	transpoType = models.CharField(max_length=10, choices=CASE_CHOICES)
 	
 	def __str__(self):              # __unicode__ on Python 2

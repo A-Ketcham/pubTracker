@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views import generic
@@ -6,16 +6,16 @@ from django.utils import timezone
 from django.template import Context, RequestContext, loader
 
 from .models import TravelPlan, UserProfile, ZIP
+from django.contrib.auth.models import User
 
 from django.forms import ModelForm
 
 from django.contrib.auth.decorators import login_required
 
 def index(request):
-	zips = ZIP.objects.all()
-	t = loader.get_template('forms/index.html')
-	c = Context({'object_list': zips})
-	return HttpResponse(t.render(c))
+	user = User.objects.filter()[:1]
+	details = UserProfile.objects.filter()[:1]
+	return render_to_response('forms/index.html', {'User': user, 'Details': details}, RequestContext(request))
 	
 def profile(request):
 	zips = ZIP.objects.all()
@@ -24,14 +24,14 @@ def profile(request):
 	return HttpResponse(t.render(c))
 
 def plans(request):
-	zips = ZIP.objects.all()
+	plans = TravelPlan.objects.all()
 	t = loader.get_template('forms/plans.html')
-	c = Context({'object_list': zips})
+	c = Context({'Plans': plans})
 	return HttpResponse(t.render(c))
 	
 def help(request):
 	zips = ZIP.objects.all()
-	t = loader.get_template('forms/plans.html')
+	t = loader.get_template('forms/help.html')
 	c = Context({'object_list': zips})
 	return HttpResponse(t.render(c))
 

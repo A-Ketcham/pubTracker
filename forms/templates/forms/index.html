@@ -3,5 +3,37 @@
 {% block title %}{{ block.super }} Profile{% endblock %}
 
 {% block content %}
+
+
+
+{% if User %}
+<table>
+	<thead>
+		<tr>
+			<th>user</th>
+			<th>email</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Company</th>
+			<th>Regiment</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for person in User %}
+		<tr>
+			<td>{{ person.username }}</td>
+			<td>{{ person.email }}</td>
+			<td>{{ person.first_name }}</td>
+			<td>{{ person.last_name }}</td>
+			<td>{{ person.company }}</td>
+			<td>{{ person.regiment }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% else %}
+	<p> Where's the Data?</p>
+{% endif %}
     
 {% endblock %}

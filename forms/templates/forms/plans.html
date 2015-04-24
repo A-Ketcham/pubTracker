@@ -3,5 +3,35 @@
 {% block title %}{{ block.super }} Travel Plans{% endblock %}
 
 {% block content %}
-    
+   
+{% if Plans %}
+<table>
+	<thead>
+		<tr>
+			<th>Cadet</th>
+			<th>Transpo</th>
+			<th>Destination</th>
+			<th>ZIP</th>
+			<th>Edited</th>
+			<th>Approved?</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for plan in Plans %}
+		<tr>
+			<td>{{ plan.xNumber }}</td>
+			<td>{{ plan.transpoID }}</td>
+			<td>{{ plan.destinationAdd }}</td>
+			<td>{{ plan.zip }}</td>
+			<td>{{ plan.editDate }}</td>
+			<td>{{ plan.approved }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% else %}
+	<p> Where's the Data?</p>
+{% endif %}
+   
 {% endblock %}
